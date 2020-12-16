@@ -1,10 +1,10 @@
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+with open("README.md", "r", encoding="utf-8") as file:
+    long_description = file.read()
 
 setuptools.setup(
-    name="py-mathexp-interpreter", # Replace with your own username
+    name="py-mathexp-interpreter",
     version="0.0.1",
     author="Njörd",
     long_description=long_description,
