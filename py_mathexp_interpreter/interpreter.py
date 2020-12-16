@@ -1,15 +1,10 @@
 from .lexer import Lexer, TokenType
 from .parser import Parser, Operand, Operator, Function
-
-import sys
 import math
 
-lexer = Lexer("1+1")
-parser = Parser(lexer)
-tree = parser.parse()
 
 funcs = {
-    "racinecarre": lambda x: math.sqrt(x)
+    "sqrt": lambda x: math.sqrt(x)
 }
 
 def visit_node(node):
