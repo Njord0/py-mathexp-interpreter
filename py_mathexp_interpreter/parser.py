@@ -33,6 +33,17 @@ class Function(Node):
         self.value = value
         self.args = args
 
+class UnaryOp(Node):
+    def __init__(self, _type, value, node):
+        self.type = _type
+        self.value = value
+        self.node = node
+
+class OperandConstant(Node):
+    def __init__(self, _type, value):
+        self.type = _type
+        self.value = value # constant_name
+
 
 class ParserException(Exception):
     pass
@@ -53,11 +64,23 @@ class Parser:
         while self.current_token != None:
             token = self.current_token
 
-            if self.current_token.type == TokenType.FUNCTION:
+            if token.type == TokenType.MINUS:
+                self.check(TokenType.MINUS)
+                node = UnaryOp(token.type, token.value, self.factor())
+
+            elif token.type == TokenType.PLUS:
+                self.check(TokenType.PLUS)
+                node = UnaryOp(token.type, token.value, self.factor())
+
+            elif self.current_token.type == TokenType.FUNCTION:
                 self.check(TokenType.FUNCTION)
                 self.check(TokenType.LPAR)
                 node = Function(token.type, token.value, self.expr())
                 self.check(TokenType.RPAR)
+
+            elif self.current_token.type == TokenType.CONSTANT:
+                self.check(TokenType.CONSTANT)
+                node = OperandConstant(token.type, token.value)
 
             elif self.current_token.type == TokenType.LPAR:
                 self.check(TokenType.LPAR)

@@ -1,12 +1,16 @@
 from .lexer import Lexer, TokenType
-from .parser import Parser, Operand, Operator, Function
+from .parser import Parser, Operand, Operator, Function, UnaryOp, OperandConstant
 import math
 
 
 funcs = {
-    "sqrt": lambda x: math.sqrt(x)
+    "Sqrt": lambda x: math.sqrt(x)
 }
 
+constants = {
+    "pi": math.pi, 
+    "e": math.e
+}
 def visit_node(node):
     if isinstance(node, Operand):
         return node.value
@@ -38,18 +42,35 @@ def visit_node(node):
 
         return ret
 
+    elif isinstance(node, OperandConstant):
+        try:
+            val = constants[node.value] #constant_name
+        except KeyError:
+            raise InterpreterException(f"Constant \"{node.value}\" not found")
+
+        return val
+
+    elif isinstance(node, UnaryOp):
+        if node.type == TokenType.MINUS:
+            return visit_node(node.node) * (-1)
+        elif node.type == TokenType.PLUS:
+            return visit_node(node.node)
+
 
 class InterpreterException(Exception):
     pass
 
 class Interpreter:
-    def __init__(self, text: str):
-        self._lexer = Lexer(text)
+    def __init__(self):
+        pass
+
+    def interpret(self, text: str):
+
+        self._lexer = Lexer(text.replace(" ", ""))
         self.parser = Parser(self._lexer)
 
         self.ast = self.parser.parse()
 
-    def interpret(self):
         return visit_node(self.ast.root)
 
 

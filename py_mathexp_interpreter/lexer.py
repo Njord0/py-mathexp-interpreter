@@ -11,6 +11,7 @@ class TokenType(enum.Enum):
     RPAR = "RPAR"
     POW = "POW"
     FUNCTION = "FUNCTION"
+    CONSTANT = "CONSTANT"
 
 class Token:
     def __init__(self, token_type, value):
@@ -51,7 +52,7 @@ class Lexer:
         stri = self.current
 
         while (char:=self.step()) is not None and char in string.ascii_letters:
-            stri+= char
+            stri += char
         return stri
 
 
@@ -94,8 +95,11 @@ class Lexer:
                 self.step()
                 return Token(TokenType.POW, '^')
 
-            if self.current in string.ascii_letters:
+            if self.current in string.ascii_uppercase:
                 return Token(TokenType.FUNCTION, self.get_ascii())
+
+            if self.current in string.ascii_letters:
+                return Token(TokenType.CONSTANT, self.get_ascii())
 
             raise LexerError(f"Unknow token \"{self.current}\" at pos {self.pos}")
 
