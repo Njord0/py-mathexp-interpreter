@@ -1,5 +1,5 @@
 from .lexer import Lexer, TokenType
-from .parser import Parser, Operand, Operator, Function
+from .parser import Parser, Operand, Operator, Function, UnaryOp
 import math
 
 
@@ -37,6 +37,12 @@ def visit_node(node):
             raise InterpreterException(f"Function \"{node.value}\" not found")
 
         return ret
+
+    elif isinstance(node, UnaryOp):
+        if node.type == TokenType.MINUS:
+            return visit_node(node.node) * (-1)
+        elif node.type == TokenType.PLUS:
+            return visit_node(node.node)
 
 
 class InterpreterException(Exception):
