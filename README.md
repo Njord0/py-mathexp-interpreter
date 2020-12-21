@@ -3,7 +3,7 @@
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Python version](https://img.shields.io/badge/python-3.8-green.svg)](https://shields.io/)
 
-py-mathexp-interpreter is a python library for evaluation of mathematical expressions. You can use it to safely interpret arithmetical expressions for you bot for example. It needs python > 3.8 to run properly.
+py-mathexp-interpreter is a python library for evaluation of mathematical expressions. You can use it to safely interpret arithmetical expressions for your bot for example. It needs python > 3.8 to run properly.
 No dependencies are needed except python standard library. 
 
 ## Installation
