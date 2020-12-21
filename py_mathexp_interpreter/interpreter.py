@@ -4,7 +4,15 @@ import math
 
 
 funcs = {
-    "Sqrt": lambda x: math.sqrt(x)
+    "Sqrt": lambda x: math.sqrt(x),
+    "Exp": lambda x: math.exp(x),
+    "Fact": lambda x: math.factorial(x),
+    "Cos": lambda x: math.cos(x),
+    "Sin": lambda x: math.sin(x),
+    "Tan": lambda x: math.tan(x),
+    "Ln": lambda x: math.log(x), #natural logarithm
+    "Log": lambda x: math.log10(x) #decimal logarithm
+
 }
 
 constants = {
