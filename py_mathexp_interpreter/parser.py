@@ -54,7 +54,7 @@ class Parser:
         self.current_token = self.lexer.get_next_token()
 
     def check(self, token_type):
-        if self.current_token.type == token_type:
+        if self.current_token != None and self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
             raise ParserException("Syntax error.")
