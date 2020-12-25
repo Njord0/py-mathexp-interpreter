@@ -87,9 +87,12 @@ class Parser:
                 node = self.expr()
                 self.check(TokenType.RPAR)
 
-            elif self.current_token.type == TokenType.INTEGER:
-                self.check(TokenType.INTEGER)
+            elif self.current_token.type == TokenType.NUMBER:
+                self.check(TokenType.NUMBER)
                 node = Operand(token.type, token.value)
+
+
+
 
             else:
                 raise ParserException("Can't have two operators consecutively")

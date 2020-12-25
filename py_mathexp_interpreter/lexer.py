@@ -2,7 +2,7 @@ import enum
 import string
 
 class TokenType(enum.Enum):
-    INTEGER = "INTEGER"
+    NUMBER = "NUMBER"
     PLUS = "PLUS"
     MINUS = "MINUS"
     MUL = "MUL"
@@ -42,11 +42,20 @@ class Lexer:
 
         return self.current
 
-    def get_int(self):
-        integer = self.current
+    def get_num(self):
+        number = self.current
         while (char:=self.step()) is not None and char.isdigit():
-            integer += char
-        return int(integer, 10)
+            number += char
+
+        if char != '.':
+            return int(number, 10)
+
+        number += '.'
+
+        while (char:=self.step()) is not None and char.isdigit():
+            number += char
+
+        return float(number)
 
     def get_ascii(self):
         stri = self.current
@@ -65,7 +74,7 @@ class Lexer:
             self.ignore_whitespace()
 
             if self.current.isdigit():
-                return Token(TokenType.INTEGER, self.get_int())
+                return Token(TokenType.NUMBER, self.get_num())
             
             if self.current == '+':
                 self.step()
@@ -94,6 +103,10 @@ class Lexer:
             if self.current == '^':
                 self.step()
                 return Token(TokenType.POW, '^')
+
+            if self.current == '.':
+                self.step()
+                return Token(TokenType.DOT, '.')
 
             if self.current in string.ascii_uppercase:
                 return Token(TokenType.FUNCTION, self.get_ascii())
